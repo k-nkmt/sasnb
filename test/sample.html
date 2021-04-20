@@ -1,0 +1,532 @@
+﻿<!--
+Notebook Style Template
+
+nbconvert https://github.com/jupyter/nbconvert
+by Jupyter Development Team, Licensed under the Modified BSD License.
+SAS Theme https://github.com/sassoftware/sas_kernel/tree/master/sas_kernel/theme
+by SAS Software, Licensed under the Apache License, Version2.0
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+<title>SAS Notebook</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror/lib/codemirror.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.6.0/dist/katex.min.css">
+
+<style type="text/css">
+body {
+  font-family: "BIZ UDGothic",
+  "Hiragino Sans W3", "Hiragino Kaku Gothic ProN", sans-serif ;
+}
+
+.border-box-sizing {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+div.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+
+div.inner_cell {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
+}
+
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+
+div.input_area pre{
+ border:none;
+}
+
+div.input {
+  page-break-inside: avoid;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+
+div.text_cell {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+div.text_cell_render {
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+
+/* Overrides of notebook CSS for static HTML export */
+body {
+  overflow: visible;
+  padding: 8px;
+}
+
+div#notebook {
+  overflow: visible;
+  border-top: none;
+}
+
+pre {
+  line-height: 1.21429em;
+  font-family: "SourceHanCodeJP-Regular",
+               "Myrica M",
+               "MyricaM M",
+               "Ricty Diminished Discord",
+               "Ricty Diminished",
+               "BIZ UDGothic",
+               "MeiryoKe_Gothic",
+               monospace;
+  font-size: 14px;
+}
+
+</style>
+
+<style>
+/*
+overwrite base16-sas-light theme to use codemirror colorize
+https://github.com/sassoftware/sas_kernel/blob/master/sas_kernel/theme/base16-sas-light.css
+Author:     Jared Dean SAS Instititue
+*/
+
+div.input_prompt {color: #6fb3d2;}
+div.output_prompt {color: #fb0120;}
+div.output_prompt select{color: #333;}
+/*
+     GLOBALS
+*/
+span.ansiblack {color: #303030;}
+span.ansiblue {color: #76c7b7;}
+span.ansigray {color: #d0d0d0;}
+span.ansigreen {color: #a1c659;}
+span.ansipurple {color: #d381c3;}
+span.ansired {color: #fb0120;}
+span.ansiyellow {color: #fda331;}
+
+div.output_stderr {background-color: #fb0120;}
+div.output_stderr pre {color: #f5f5f5;}
+
+.cm-s-default.CodeMirror {background: #ffffff; color: #303030;}
+.cm-s-default div.CodeMirror-selected {background: /*#f5f5f5*/ #CCCCCC  !important;}
+.cm-s-default .CodeMirror-gutters {background: #ffffff; border-right: 0px;}
+.cm-s-default .CodeMirror-linenumber {color: /*#d0d0d0*/ #000000;}
+.cm-s-default .CodeMirror-cursor {border-left: 1px solid #b0b0b0 !important;}
+
+.cm-s-default span.cm-comment {color: #008000; font-weight: italic;}
+.cm-s-default span.cm-atom {color: #fb0120;}
+.cm-s-default span.cm-number {color: #fc6d24;}
+
+.cm-s-default span.cm-property, .cm-s-default span.cm-attribute {color: #a1c659;}
+.cm-s-default span.cm-keyword {color: #0000FF;}
+.cm-s-default span.cm-string {color: #800080;}
+.cm-s-default span.cm-operator {color: #000000;}
+.cm-s-default span.cm-builtin {color: #000080; font-weight: bold; }
+
+.cm-s-default span.cm-variable {color: #505050;}
+.cm-s-default span.cm-variable-2 {color: #000080;}
+.cm-s-default span.cm-def {color: #0000FF;}
+.cm-s-default span.cm-error {background: #fb0120; color: #b0b0b0;}
+.cm-s-default span.cm-bracket {color: #505050;}
+.cm-s-default span.cm-tag {color: #fb0120;}
+.cm-s-default span.cm-link {color: #d381c3;}
+.cm-s-default span.cm-meta {color: #fb0120;}
+
+.cm-s-default .CodeMirror-matchingbracket { text-decoration: underline; color: #303030 !important;}
+</style>
+
+</head>
+
+
+<body>
+  <div id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
+    <template v-for = "item in items" >
+      <div class="cell border-box-sizing text_cell rendered" v-if="item.md">
+        <div class="prompt input_prompt">
+        </div>
+        <div class="inner_cell">
+          <div class="text_cell_render border-box-sizing rendered_html">
+            <vue-markdown :source = "item.md"></vue-markdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="cell border-box-sizing code_cell rendered" v-if="item.code">
+        <div class="input">
+          <div class="prompt input_prompt">In&nbsp;[{{item.n}}]:</div>
+          <div class="inner_cell">
+              <div class="input_area">
+                <pre data-lang = "sas" class="code" v-html="item.code"></pre>
+              </div>
+          </div>
+        </div>
+
+        <div class="output_wrapper" v-if="item.log || item.result">
+          <div class="output">
+
+            <div class="output_area">
+              <div class="prompt output_prompt"><p>Out[{{item.n}}]:</p>
+                <select class="form-control" v-model="outmode">
+                  <option value="result">result</option>
+                  <option value="log">log</option>
+                </select>
+              </div>
+                <div class="output_text output_subarea output_execute_result" v-html="item.result" v-if="outmode==='result'"></div>
+                <div class="output_text output_subarea output_execute_result" v-if="outmode==='log'"><pre>{{item.log}}</pre></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </template>
+
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror/lib/codemirror.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror/mode/sas/sas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror/addon/runmode/runmode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror/addon/runmode/colorize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-markdown/dist/vue-markdown.min.js"></script>
+
+<script>
+  Vue.use(VueMarkdown);
+  new Vue({
+  el: '#notebook',
+  data() {
+    return {
+      outmode: 'result' ,
+      items:[
+//  Insert data here !
+{'md':`
+
+# 利用方法
+SAS単体(+ネット接続)でjupyter notebook風の出力を作成します。
+
+コメント行は複数行をコメントアウトする記法で
+コメントアウト用の記号の行は他の文字を含まないようにすると
+コメントでmarkdown記法が利用可能です。
+
+TeX記法も使えるかと思います。
+ライブラリにMathJaxでなくKaTeXを使っているため、若干の表示の違いがあるかもしれません。
+$$
+f(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\exp{-\\frac{(x-\\mu)^2}{2\\sigma^2}}
+$$
+
+## 処理の概要
+基本的にコメントでブロックに分割を行い、実行結果・ログをhtmlに埋め込んでいます。
+配列で埋め込み、テンプレート処置にはvue.jsを使用しています。
+
+## プログラムについて
+SASの処理で少し特殊なものとしては、以下のようなエスケープ処理があります。
+htmlでは特定の文字をSASのマクロのクォートと同様の処理を行う必要があります。
+SASでは\`htmlencode\`関数で処理できます。
+[リファレンス](https://support.sas.com/documentation/cdl_alternate/ja/lefunctionsref/67960/HTML/default/n0cm3nfzxlg3iwn1myjzv3t8rt8j.htm)
+jsのテンプレートリテラルに使われるバッククォート(\`)は対象外なので、これについては別途置換します。
+`},
+{'n':1 ,
+'code':`data work.encode ;
+  text = 'M&amp;M' ;
+  e_text = htmlencode(text) ;
+run ;
+
+proc print data = work.encode ;
+run ;
+`,
+'log':`
+77        +data work.encode ;
+78        +  text = 'M&M' ;
+79        +  e_text = htmlencode(text) ;
+80        +run ;
+
+NOTE: データセットWORK.ENCODEは1オブザベーション、2変数です。
+NOTE: DATAステートメント処理(合計処理時間):
+処理時間           0.00 秒
+ユーザーCPU時間    0.00 秒
+システムCPU時間    0.00 秒
+メモリ             516.87k
+OSメモリ           35496.00k
+タイムスタンプ     2021/04/19 午後10:07:43
+4                                                         SAS システム               2021年 4月20日 火曜日 07時07分43秒
+
+ステップ数                        184  スイッチ数  2
+ページフォルト回数                0
+ページリクレーム回数              117
+ページスワップ回数                0
+自発的コンテキストスイッチ回数    9
+非自発的コンテキストスイッチ回数  0
+ブロック入力操作回数              0
+ブロック出力操作回数              272
+
+
+81        +
+82        +proc print data = work.encode ;
+83        +run ;
+
+NOTE: データセットWORK.ENCODEから1オブザベーションを読み込みました。
+NOTE: PROCEDURE PRINT処理(合計処理時間):
+処理時間           0.01 秒
+ユーザーCPU時間    0.02 秒
+システムCPU時間    0.00 秒
+メモリ             2965.31k
+OSメモリ           37288.00k
+タイムスタンプ     2021/04/19 午後10:07:43
+ステップ数                        185  スイッチ数  0
+ページフォルト回数                0
+ページリクレーム回数              498
+ページスワップ回数                0
+自発的コンテキストスイッチ回数    0
+非自発的コンテキストスイッチ回数  0
+ブロック入力操作回数              0
+ブロック出力操作回数              88
+
+
+84        +
+`,
+'result':`
+<div class="branch">
+<a name="IDX"></a>
+<div>
+<div align="center">
+<table class="table" cellspacing="0" cellpadding="5" rules="all" frame="box" bordercolor="#C1C1C1" summary="Procedure Print: データセット WORK.ENCODE">
+<colgroup>
+<col>
+</colgroup>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="r header" scope="col">Obs</th>
+<th class="l header" scope="col">text</th>
+<th class="l header" scope="col">e_text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="r rowheader" scope="row">1</th>
+<td class="l data">M&amp;M</td>
+<td class="l data">M&amp;amp;M</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<br>
+</div>
+`},
+{'md':`
+
+## デコード処理
+
+htmlencode関数と反対の処理を行います
+`},
+{'n':2 ,
+'code':`data work.decode ;
+  set work.encode ;
+  d_text = htmldecode(text) ;
+run ;`,
+'log':`
+85        +data work.decode ;
+86        +  set work.encode ;
+87        +  d_text = htmldecode(text) ;
+88        +run ;
+
+NOTE: データセットWORK.ENCODEから1オブザベーションを読み込みました。
+NOTE: データセットWORK.DECODEは1オブザベーション、3変数です。
+NOTE: DATAステートメント処理(合計処理時間):
+処理時間           0.00 秒
+ユーザーCPU時間    0.00 秒
+システムCPU時間    0.00 秒
+メモリ             796.87k
+OSメモリ           36780.00k
+タイムスタンプ     2021/04/19 午後10:07:43
+ステップ数                        193  スイッチ数  2
+ページフォルト回数                0
+ページリクレーム回数              150
+ページスワップ回数                0
+自発的コンテキストスイッチ回数    10
+非自発的コンテキストスイッチ回数  0
+ブロック入力操作回数              0
+ブロック出力操作回数              264
+
+
+`,
+'result':`
+`},
+          ]
+        }
+      },
+  mounted : function(){
+    var codes = document.getElementsByClassName("code");
+    var editor = CodeMirror.colorize(codes);
+  },
+
+  })
+</script>
+
+</body>
+</html>
